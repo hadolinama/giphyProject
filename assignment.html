@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Giphy Assignment</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div id="button-group">
+    <button data-music="reggae">Bob Marley</button>
+    <button data-music="gosple">Kirk Franklin</button>
+    <button data-music="country">Kenny Rogers</button>
+    <button data-music="rap">Tupac</button>
+    <button data-music="soul">Nina Simone</button>
+    <button data-music="classical">Mozart</button>
+    <button data-music="k-pop">Jackie Chan</button>
+    <button data-music="guitar">Carlos Santana</button>
+    <button data-music="romance">Celine Dion</button>
+
+</div>
+    <br>
+    <form id="music-form">
+        <label for="music-input">Add a musician</label>
+        <br>
+        <input type="text" id="music-input">
+        <br>
+
+
+        <input id="add-musician" type="submit" value="Add a musician">
+    </form>
+
+    <div id="gifs-appear-here"></div>
+
+
+    <script type="text/javascript">
+        var topics = []; //this is so that users can type in a musician
+
+       
+
+            $("button").on("click", function() {
+
+                var Newmusic = $(this).attr("data-music"); //this variable refers to  all the "data-music"
+
+                console.log("Button firing", Newmusic);
+                
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+                    Newmusic + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+                $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    })
+                    .done(function(response) {
+
+                        var results = response.data;
+
+                        for (var i = 0; i < results.length; i++) {
+
+                            var NewmusicDiv = $("div");
+
+                            var rating = response.Rated;
+
+                            var R = $("<p>").text("Rating: " + results[i].rating);
+
+                            var NewmusicImage = $("<img>");
+
+                            NewmusicImage.attr("src", results[i].images.fixed_height.url);
+
+                            NewmusicDiv.append();
+                            NewmusicDiv.append(NewmusicImage);
+
+                            $("gifs-appear-here").prepend(NewmusicDiv);
+                        }
+                    });
+
+            });
+               // This function handles events where a movie button is clicked
+      $("#add-musician").on("click", function(event) {
+        event.preventDefault();
+        // This line grabs the input from the textbox
+        var musician = $("#music-input").val().trim();
+        console.log("Where are we at", musician);
+
+        var button = $("<button>testbutton</button>")
+        $("#button-group").append(button);
+        $("#button-group").append(music)
+        // Adding movie from the textbox to our array
+        //movies.push(movie);
+
+        // Calling renderButtons which handles the processing of our movie array
+        //renderButtons();
+      });
+
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+body {
+  background-color: #00bfff;
+}
+form {
+   float: right;
+   padding-top: 20px;
+}
+
+#button-group {
+	display: inline-table;
+}
